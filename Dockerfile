@@ -12,6 +12,7 @@ RUN apt-get update && \
     virtualenv --python=python3 /app
 
 WORKDIR /app
+EXPOSE 8000
 
 COPY requirements.pip requirements.pip
 
