@@ -19,6 +19,34 @@ if not api.application_key:
 i = Info("ambient_weather_exporter", "Prometheus exporter for Ambient Weather personal weather station")
 i.info({'version': '0'})
 
+# {'dateutc': 1565188020000, 'tempinf': 77.7, 'humidityin': 54, 'baromrelin': 29.794, 'baromabsin': 29.103, 'tempf': 76.5, 'humidity': 60, 'winddir': 54, 'windspeedmph': 0, 'windgustmph': 0, 'maxdailygust': 1.1, 'hourlyrainin': 0, 'eventrainin': 0, 'dailyrainin': 0, 'weeklyrainin': 0.039, 'monthlyrainin': 0.15, 'totalrainin': 0.201, 'solarradiation': 48.56, 'uv': 0, 'feelsLike': 76.67, 'dewPoint': 61.56, 'lastRain': '2019-08-06T09:25:00.000Z', 'tz': 'America/Chicago', 'date': '2019-08-07T14:27:00.000Z'}
+
+# {
+# 'dateutc': 1565188020000,
+# 'tempinf': 77.7,
+# 'humidityin': 54,
+# 'baromrelin': 29.794,
+# 'baromabsin': 29.103,
+# 'tempf': 76.5,
+# 'humidity': 60,
+# 'winddir': 54,
+# 'windspeedmph': 0,
+# 'windgustmph': 0,
+# 'maxdailygust': 1.1,
+# 'hourlyrainin': 0,
+# 'eventrainin': 0,
+# 'dailyrainin': 0,
+# 'weeklyrainin': 0.039,
+# 'monthlyrainin': 0.15,
+# 'totalrainin': 0.201,
+# 'solarradiation': 48.56,
+# 'uv': 0,
+# 'feelsLike': 76.67,
+# 'dewPoint': 61.56,
+# 'lastRain': '2019-08-06T09:25:00.000Z',
+# 'tz': 'America/Chicago',
+# 'date': '2019-08-07T14:27:00.000Z'}
+
 indoor_temperature = Gauge("indoor_temperature", "Indoor Temperature in F")
 outdoor_temperature = Gauge("outdoor_temperature", "Outdoor Temperature in F")
 
