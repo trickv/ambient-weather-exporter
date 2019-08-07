@@ -6,6 +6,12 @@ from ambient_api.ambientapi import AmbientAPI
 from prometheus_client import Info, Gauge
 from prometheus_client import start_http_server
 
+# Overall stuff left to do:
+#  - handle multiple and zero devices better
+#  - push bugfixes upstream
+#  - experiment with changing unit settings in my profile
+#  - work build and device information into prom metrics
+
 api = AmbientAPI()
 if not api.api_key:
     raise Exception("You must specify an API Key")
@@ -95,7 +101,7 @@ while True:
     # dir(device): ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'api_instance', 'convert_datetime', 'current_time', 'get_data', 'info', 'last_data', 'mac_address']
     last_data = device.last_data
     print(device.info)
-    print(device.mac_address)
+    print(device.mac_address) # FIXME: add mac address as an instance parameter on all fields
     print(last_data)
     for gauge in gauges:
         gauge.set(last_data[gauge._ambient_name])
