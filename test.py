@@ -47,26 +47,36 @@ i.info({'version': '0'})
 # 'tz': 'America/Chicago',
 # 'date': '2019-08-07T14:27:00.000Z'}
 
-indoor_temperature = Gauge("indoor_temperature", "Indoor Temperature in F")
-outdoor_temperature = Gauge("outdoor_temperature", "Outdoor Temperature in F")
-solar_radiation = Gauge("solar_radiation", "Solar Radiation (W/m2)")
+def new_gauge(ambient_name, prom_name, description):
+    gauge = Gauge(prom_name, description)
+    gauge._ambient_name = ambient_name
+    return gauge
+
+gauges = {
+    new_gauge("tempinf", "indoor_temperature", "Indoor Temperature (Degrees F)"), # FIXME: what if i change my prefs to C? Does it export in C?
+    new_gauge("humidityin", "indoor_humidity", "Indoor Relative Humidity (RH%)"),
+    new_gauge("baromrelin", "baromrelin", "Barometer FIXME 1"),
+    new_gauge("baromabsin", "baromabsin", "Barometer FIXME 2"),
+    new_gauge("tempf", "outdoor_temperature", "Outdoor Temperature (Degrees F)"),
+    new_gauge("humidity", "outdoor_humidity", "Outdoor Relative Humidity (RH%)"),
+    new_gauge("solarradiation", "solar_radiation", "Solar Radiation (W/m2)"),
+}
 
 start_http_server(8000)
 while True:
     devices = api.get_devices()
     if len(devices) == 0:
         print("No devices found on Ambient Weather account.")
-        indoor_temperature.set(None)
-        outdoor_temperature.set(None)
+        for gauge in gauges:
+            gauge.set(None) # FIXME: this doesn't work anyway and throws. What to do?
         continue
     device = devices[0] # FIXME: handle multiple devices
+    # dir(device): ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'api_instance', 'convert_datetime', 'current_time', 'get_data', 'info', 'last_data', 'mac_address']
     last_data = device.last_data
     print(device.info)
     print(device.mac_address)
-    print(dir(device))
     print(last_data)
-    indoor_temperature.set(last_data['tempinf'])
-    outdoor_temperature.set(last_data['tempf'])
-    solar_radiation.set(last_data['solarradiation'])
+    for gauge in gauges:
+        gauge.set(last_data[gauge._ambient_name])
     print("sleeping 60");
     time.sleep(60)
