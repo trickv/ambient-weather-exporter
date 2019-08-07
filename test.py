@@ -24,7 +24,13 @@ outdoor_temperature = Gauge("outdoor_temperature", "Outdoor Temperature in F")
 
 start_http_server(8000)
 while True:
-    device = api.get_devices()[0]
+    devices = api.get_devices()
+    if len(devices) == 0:
+        print("No devices found on Ambient Weather account.")
+        indoor_temperature.set(None)
+        outdoor_temperature.set(None)
+        continue
+    device = devices[0] # FIXME: handle multiple devices
     last_data = device.last_data
     print(device.info)
     print(device.mac_address)
