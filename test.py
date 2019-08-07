@@ -52,6 +52,11 @@ def new_gauge(ambient_name, prom_name, description):
     gauge._ambient_name = ambient_name
     return gauge
 
+# Fields left to handle:
+# dateutc
+# lastRain
+# date
+
 gauges = {
     new_gauge("tempinf", "indoor_temperature", "Indoor Temperature (Degrees F)"), # FIXME: what if i change my prefs to C? Does it export in C?
     new_gauge("humidityin", "indoor_humidity", "Indoor Relative Humidity (RH%)"),
@@ -59,7 +64,23 @@ gauges = {
     new_gauge("baromabsin", "baromabsin", "Barometer FIXME 2"),
     new_gauge("tempf", "outdoor_temperature", "Outdoor Temperature (Degrees F)"),
     new_gauge("humidity", "outdoor_humidity", "Outdoor Relative Humidity (RH%)"),
+    new_gauge("winddir", "wind_direction", "Wind Direction (0-359 degrees)"),
+    new_gauge("windspeedmph", "wind_speed", "Wind Speed (MPH)"), # FIXME: what if i change my prefs to m/s?
+    new_gauge("windgustmph", "wind_gust", "Wind Gust (MPH)"),
+    new_gauge("maxdailygust", "wind_gust_daily_max", "Maximum Daily Wind Gust (MPH)"),
+
+    # FIXME: should rain figures be Counters instead?
+    new_gauge("hourlyrainin", "rain_hourly", "Rainfall per hour (inches)"), #FIXME: units?
+    new_gauge("eventrainin", "rain_event", "Rainfall per this event? FIXME. Inches."),
+    new_gauge("dailyrainin", "rain_daily", "Rainfall per day (inches)"),
+    new_gauge("weeklyrainin", "rain_weekly", "Rainfall per week (inches)"),
+    new_gauge("monthlyrainin", "rain_monthly", "Rainfall per month (inches)"),
+    new_gauge("totalrainin", "rain_total", "Rainfall total (inches)"),
+
     new_gauge("solarradiation", "solar_radiation", "Solar Radiation (W/m2)"),
+    new_gauge("uv", "uv", "Ultravoilet Index"),
+    new_gauge("feelsLike", "outdoor_temperature_heat_index", "Outdoor Temperature Heat Index / Feels Like (Degrees F)"),
+    new_gauge("dewPoint", "outdoor_temperature_dew_point", "Outdoor Temperature Dew Point (Degrees F)"),
 }
 
 start_http_server(8000)
