@@ -49,6 +49,7 @@ i.info({'version': '0'})
 
 indoor_temperature = Gauge("indoor_temperature", "Indoor Temperature in F")
 outdoor_temperature = Gauge("outdoor_temperature", "Outdoor Temperature in F")
+solar_radiation = Gauge("solar_radiation", "Solar Radiation (W/m2)")
 
 start_http_server(8000)
 while True:
@@ -66,5 +67,6 @@ while True:
     print(last_data)
     indoor_temperature.set(last_data['tempinf'])
     outdoor_temperature.set(last_data['tempf'])
+    solar_radiation.set(last_data['solarradiation'])
     print("sleeping 60");
     time.sleep(60)
