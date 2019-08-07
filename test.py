@@ -11,6 +11,8 @@ from prometheus_client import start_http_server
 #  - push bugfixes upstream
 #  - experiment with changing unit settings in my profile
 #  - work build and device information into prom metrics
+#  - rename test.py
+#  - local testing interface / method?
 
 api = AmbientAPI()
 if not api.api_key:
