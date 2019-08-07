@@ -64,11 +64,13 @@ def new_gauge(ambient_name, prom_name, description):
 # date
 
 gauges = {
-    new_gauge("tempinf", "indoor_temperature", "Indoor Temperature (Degrees F)"), # FIXME: what if i change my prefs to C? Does it export in C?
+    new_gauge("tempinf", "indoor_temperature_f", "Indoor Temperature (Degrees F)"), # FIXME: what if i change my prefs to C? Does it export in C?
+    new_gauge("tempinc", "indoor_temperature", "Indoor Temperature (Degrees C)"),
     new_gauge("humidityin", "indoor_humidity", "Indoor Relative Humidity (RH%)"),
     new_gauge("baromrelin", "baromrelin", "Barometer FIXME 1"),
     new_gauge("baromabsin", "baromabsin", "Barometer FIXME 2"),
-    new_gauge("tempf", "outdoor_temperature", "Outdoor Temperature (Degrees F)"),
+    new_gauge("tempf", "outdoor_temperature_f", "Outdoor Temperature (Degrees F)"),
+    new_gauge("tempc", "outdoor_temperature", "Outdoor Temperature (Degrees C)"),
     new_gauge("humidity", "outdoor_humidity", "Outdoor Relative Humidity (RH%)"),
     new_gauge("winddir", "wind_direction", "Wind Direction (0-359 degrees)"),
     new_gauge("windspeedmph", "wind_speed", "Wind Speed (MPH)"), # FIXME: what if i change my prefs to m/s?
@@ -89,6 +91,9 @@ gauges = {
     new_gauge("dewPoint", "outdoor_temperature_dew_point", "Outdoor Temperature Dew Point (Degrees F)"),
 }
 
+def f_to_c(fahrenheit_temperature):
+    return (fahrenheit_temperature - 32) / 1.8
+
 start_http_server(8000)
 while True:
     devices = api.get_devices()
@@ -100,6 +105,8 @@ while True:
     device = devices[0] # FIXME: handle multiple devices
     # dir(device): ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'api_instance', 'convert_datetime', 'current_time', 'get_data', 'info', 'last_data', 'mac_address']
     last_data = device.last_data
+    last_data['tempinc'] = f_to_c(last_data['tempinf'])
+    last_data['tempc'] = f_to_c(last_data['tempf'])
     print(device.info)
     print(device.mac_address) # FIXME: add mac address as an instance parameter on all fields
     print(last_data)
