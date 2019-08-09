@@ -89,8 +89,10 @@ gauges = {
 
     new_gauge("solarradiation", "solar_radiation", "Solar Radiation (W/m2)"),
     new_gauge("uv", "uv", "Ultravoilet Index"),
-    new_gauge("feelsLike", "outdoor_temperature_heat_index", "Outdoor Temperature Heat Index / Feels Like (Degrees F)"),
-    new_gauge("dewPoint", "outdoor_temperature_dew_point", "Outdoor Temperature Dew Point (Degrees F)"),
+    new_gauge("feelsLike", "outdoor_temperature_heat_index_f", "Outdoor Temperature Heat Index / Feels Like (Degrees F)"),
+    new_gauge("feelsLike_c", "outdoor_temperature_heat_index", "Outdoor Temperature Heat Index / Feels Like (Degrees C)"),
+    new_gauge("dewPoint", "outdoor_temperature_dew_point_f", "Outdoor Temperature Dew Point (Degrees F)"),
+    new_gauge("dewPoint_c", "outdoor_temperature_dew_point", "Outdoor Temperature Dew Point (Degrees C)"),
 }
 
 def f_to_c(fahrenheit_temperature):
@@ -109,6 +111,8 @@ while True:
     last_data = device.last_data
     last_data['tempinc'] = f_to_c(last_data['tempinf'])
     last_data['tempc'] = f_to_c(last_data['tempf'])
+    last_data['feelsLike_c'] = f_to_c(last_data['feelsLike'])
+    last_data['dewPoint_c'] = f_to_c(last_data['dewPoint'])
     print(device.info)
     print(device.mac_address) # FIXME: add mac address as an instance parameter on all fields
     print(last_data)
