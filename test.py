@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import time
+import math
 
 from ambient_api.ambientapi import AmbientAPI
 from prometheus_client import Info, Gauge
@@ -69,11 +70,13 @@ gauges = {
     new_gauge("tempinf", "indoor_temperature_f", "Indoor Temperature (Degrees F)"), # FIXME: what if i change my prefs to C? Does it export in C?
     new_gauge("tempinc", "indoor_temperature", "Indoor Temperature (Degrees C)"),
     new_gauge("humidityin", "indoor_humidity", "Indoor Relative Humidity (RH%)"),
+    new_gauge("humidityin_absolute", "indoor_humidity_absolute", "Indoor Absolute Humidity (g/m^3)"),
     new_gauge("baromrelin", "baromrelin", "Barometer FIXME 1"),
     new_gauge("baromabsin", "baromabsin", "Barometer FIXME 2"),
     new_gauge("tempf", "outdoor_temperature_f", "Outdoor Temperature (Degrees F)"),
     new_gauge("tempc", "outdoor_temperature", "Outdoor Temperature (Degrees C)"),
     new_gauge("humidity", "outdoor_humidity", "Outdoor Relative Humidity (RH%)"),
+    new_gauge("humidity_absolute", "outdoor_humidity_absolute", "Outdoor Absolute Humidity (g/m^3)"),
     new_gauge("winddir", "wind_direction", "Wind Direction (0-359 degrees)"),
     new_gauge("windspeedmph", "wind_speed", "Wind Speed (MPH)"), # FIXME: what if i change my prefs to m/s?
     new_gauge("windgustmph", "wind_gust", "Wind Gust (MPH)"),
@@ -98,6 +101,14 @@ gauges = {
 def f_to_c(fahrenheit_temperature):
     return (fahrenheit_temperature - 32) / 1.8
 
+def rh_to_abs_humidity(relative_humidity, temperature):
+    """
+    Converts Relative Humidity (%) to Absolute Humidity (g/m^3)
+    Formulas: https://carnotcycle.wordpress.com/2012/08/04/how-to-convert-relative-humidity-to-absolute-humidity/
+    Example code (which is wrong): https://github.com/joeds13/prometheus-dht-exporter/blob/49f948b37db5b934834c56093dbbc1be280d7524/dht-exporter.py#L13
+    """
+    return (6.112 * math.exp((17.67 * temperature) / (temperature + 243.5)) * relative_humidity * 2.1674) / (273.15 + temperature)
+
 start_http_server(8000)
 while True:
     devices = api.get_devices()
@@ -113,6 +124,8 @@ while True:
     last_data['tempc'] = f_to_c(last_data['tempf'])
     last_data['feelsLike_c'] = f_to_c(last_data['feelsLike'])
     last_data['dewPoint_c'] = f_to_c(last_data['dewPoint'])
+    last_data['humidityin_absolute'] = rh_to_abs_humidity(last_data['humidityin'], last_data['tempinc'])
+    last_data['humidity_absolute'] = rh_to_abs_humidity(last_data['humidity'], last_data['tempc'])
     print(device.info)
     print(device.mac_address) # FIXME: add mac address as an instance parameter on all fields
     print(last_data)
