@@ -120,6 +120,9 @@ while True:
     device = devices[0] # FIXME: handle multiple devices
     # dir(device): ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'api_instance', 'convert_datetime', 'current_time', 'get_data', 'info', 'last_data', 'mac_address']
     last_data = device.last_data
+    now = time.time()
+    if last_data['dateutc'] / 1000 < now - 120:
+        raise Exception("Stale data from Ambient API; dateutc={}, now={}".format(last_data['dateutc'], now))
     last_data['tempinc'] = f_to_c(last_data['tempinf'])
     last_data['tempc'] = f_to_c(last_data['tempf'])
     last_data['feelsLike_c'] = f_to_c(last_data['feelsLike'])
