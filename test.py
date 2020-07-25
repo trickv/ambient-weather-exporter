@@ -113,10 +113,8 @@ start_http_server(8000)
 while True:
     devices = api.get_devices()
     if len(devices) == 0:
-        print("No devices found on Ambient Weather account.")
-        for gauge in gauges:
-            gauge.set(None) # FIXME: this doesn't work anyway and throws. What to do?
-        continue
+        print("No devices found on Ambient Weather account. Check your credentials are correct.")
+        exit(1)
     device = devices[0] # FIXME: handle multiple devices
     # dir(device): ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'api_instance', 'convert_datetime', 'current_time', 'get_data', 'info', 'last_data', 'mac_address']
     last_data = device.last_data
@@ -124,15 +122,21 @@ while True:
     if last_data['dateutc'] / 1000 < now - 120:
         raise Exception("Stale data from Ambient API; dateutc={}, now={}".format(last_data['dateutc'], now))
     last_data['tempinc'] = f_to_c(last_data['tempinf'])
-    last_data['tempc'] = f_to_c(last_data['tempf'])
-    last_data['feelsLike_c'] = f_to_c(last_data['feelsLike'])
-    last_data['dewPoint_c'] = f_to_c(last_data['dewPoint'])
-    last_data['humidityin_absolute'] = rh_to_abs_humidity(last_data['humidityin'], last_data['tempinc'])
-    last_data['humidity_absolute'] = rh_to_abs_humidity(last_data['humidity'], last_data['tempc'])
+    if 'tempf' in last_data:
+        last_data['tempc'] = f_to_c(last_data['tempf'])
+    if 'feelsLike' in last_data:
+        last_data['feelsLike_c'] = f_to_c(last_data['feelsLike'])
+    if 'dewPoint' in last_data:
+        last_data['dewPoint_c'] = f_to_c(last_data['dewPoint'])
+    if 'humidityin' in last_data and 'tempinc' in last_data:
+        last_data['humidityin_absolute'] = rh_to_abs_humidity(last_data['humidityin'], last_data['tempinc'])
+    if 'humidity' in last_data and 'tempc' in last_data:
+        last_data['humidity_absolute'] = rh_to_abs_humidity(last_data['humidity'], last_data['tempc'])
     print(device.info)
     print(device.mac_address) # FIXME: add mac address as an instance parameter on all fields
     print(last_data)
     for gauge in gauges:
-        gauge.set(last_data[gauge._ambient_name])
+        if gauge._ambient_name in last_data:
+            gauge.set(last_data[gauge._ambient_name])
     print("sleeping 60");
     time.sleep(60)
