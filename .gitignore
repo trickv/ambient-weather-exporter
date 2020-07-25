@@ -1,0 +1,2 @@
+# don't check in secrets
+k8s/secrets.yml
