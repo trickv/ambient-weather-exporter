@@ -1,0 +1,68 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ambient-weather
+spec:
+  selector:
+    matchLabels:
+      app: ambient-weather-server
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ambient-weather-server
+    spec:
+      containers:
+
+      - name: ambient-weather
+        image: danamerrick/ambient-weather-exporter:latest
+        imagePullPolicy: Always
+        ports:
+          - name: prometrics
+            containerPort: 9093
+        env:
+         - name: AMBIENT_API_KEY
+           valueFrom:
+             secretKeyRef:
+               name: ambient-weather-secrets
+               key: AMBIENT_API_KEY
+         - name: AMBIENT_APPLICATION_KEY
+           valueFrom:
+             secretKeyRef:
+               name: ambient-weather-secrets
+               key: AMBIENT_APPLICATION_KEY
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: ambient-weather
+  name: ambient-weather
+spec:
+  ports:
+  - name: prometrics
+    port: 9093
+    protocol: TCP
+    targetPort: 8000
+  sessionAffinity: None
+  type: ClusterIP
+  selector:
+    app: ambient-weather-server
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    k8s-app: ambient-weather-monitor
+  name: ambient-weather
+spec:
+  endpoints:
+  - interval: 30s
+    port: prometrics
+    scheme: http
+  selector:
+    matchLabels:
+      k8s-app: ambient-weather
