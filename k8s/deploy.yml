@@ -20,7 +20,7 @@ spec:
         imagePullPolicy: Always
         ports:
           - name: prometrics
-            containerPort: 9093
+            containerPort: 8000
         env:
          - name: AMBIENT_API_KEY
            valueFrom:
