@@ -28,6 +28,8 @@ if not api.application_key:
 i = Info("ambient_weather_exporter", "Prometheus exporter for Ambient Weather personal weather station")
 i.info({'version': '0'})
 
+
+
 # {'dateutc': 1565188020000, 'tempinf': 77.7, 'humidityin': 54, 'baromrelin': 29.794, 'baromabsin': 29.103, 'tempf': 76.5, 'humidity': 60, 'winddir': 54, 'windspeedmph': 0, 'windgustmph': 0, 'maxdailygust': 1.1, 'hourlyrainin': 0, 'eventrainin': 0, 'dailyrainin': 0, 'weeklyrainin': 0.039, 'monthlyrainin': 0.15, 'totalrainin': 0.201, 'solarradiation': 48.56, 'uv': 0, 'feelsLike': 76.67, 'dewPoint': 61.56, 'lastRain': '2019-08-06T09:25:00.000Z', 'tz': 'America/Chicago', 'date': '2019-08-07T14:27:00.000Z'}
 
 # {
@@ -56,8 +58,27 @@ i.info({'version': '0'})
 # 'tz': 'America/Chicago',
 # 'date': '2019-08-07T14:27:00.000Z'}
 
+# {
+#         "batt1": 1,
+#         "batt2": 1,
+#         "battout": 1,
+#         "date": "2020-07-25T18:00:00.000Z",
+#         "dateutc": 1595700000000,
+#         "dewPoint2": 63.6,
+#         "dewPointin": 62.2,
+#         "feelsLike2": 94.6,
+#         "feelsLikein": 85.4,
+#         "humidity2": 38,
+#         "humidityin": 47,
+#         "loc": "ambient-prod-2020-30",
+#         "temp1f": 77.1,
+#         "temp2f": 93,
+#         "tempinf": 84.7
+# }
+
+
 def new_gauge(ambient_name, prom_name, description):
-    gauge = Gauge(prom_name, description)
+    gauge = Gauge("weather_" + prom_name, description)
     gauge._ambient_name = ambient_name
     return gauge
 
@@ -75,7 +96,12 @@ gauges = {
     new_gauge("baromabsin", "baromabsin", "Barometer FIXME 2"),
     new_gauge("tempf", "outdoor_temperature_f", "Outdoor Temperature (Degrees F)"),
     new_gauge("tempc", "outdoor_temperature", "Outdoor Temperature (Degrees C)"),
+    new_gauge("temp1f", "outdoor_temperature1_f", "Outdoor Temperature (Degrees F)"),
+    new_gauge("temp1c", "outdoor_temperature1", "Outdoor Temperature (Degrees C)"),
+    new_gauge("temp2f", "outdoor_temperature2_f", "Outdoor Temperature (Degrees F)"),
+    new_gauge("temp2c", "outdoor_temperature2", "Outdoor Temperature (Degrees C)"),
     new_gauge("humidity", "outdoor_humidity", "Outdoor Relative Humidity (RH%)"),
+    new_gauge("humidity2", "outdoor_humidity2", "Outdoor Relative Humidity (RH%)"),
     new_gauge("humidity_absolute", "outdoor_humidity_absolute", "Outdoor Absolute Humidity (g/m^3)"),
     new_gauge("winddir", "wind_direction", "Wind Direction (0-359 degrees)"),
     new_gauge("windspeedmph", "wind_speed", "Wind Speed (MPH)"), # FIXME: what if i change my prefs to m/s?
@@ -94,8 +120,16 @@ gauges = {
     new_gauge("uv", "uv", "Ultravoilet Index"),
     new_gauge("feelsLike", "outdoor_temperature_heat_index_f", "Outdoor Temperature Heat Index / Feels Like (Degrees F)"),
     new_gauge("feelsLike_c", "outdoor_temperature_heat_index", "Outdoor Temperature Heat Index / Feels Like (Degrees C)"),
+    new_gauge("feelsLikein", "outdoor_temperature_heat_index_in_f", "Outdoor Temperature Heat Index / Feels Like (Degrees F)"),
+    new_gauge("feelsLikein_c", "outdoor_temperature_heat_index_in", "Outdoor Temperature Heat Index / Feels Like (Degrees C)"),
+    new_gauge("feelsLike2", "outdoor_temperature_heat_index2_f", "Outdoor Temperature Heat Index / Feels Like (Degrees F)"),
+    new_gauge("feelsLike2c", "outdoor_temperature_heat_index2", "Outdoor Temperature Heat Index / Feels Like (Degrees C)"),
     new_gauge("dewPoint", "outdoor_temperature_dew_point_f", "Outdoor Temperature Dew Point (Degrees F)"),
     new_gauge("dewPoint_c", "outdoor_temperature_dew_point", "Outdoor Temperature Dew Point (Degrees C)"),
+    new_gauge("dewPointin", "outdoor_temperature_dew_point_in_f", "Indoor Temperature Dew Point (Degrees F)"),
+    new_gauge("dewPointin_c", "outdoor_temperature_dew_point_in", "Indoor Temperature Dew Point (Degrees C)"),
+    new_gauge("dewPoint2", "outdoor_temperature_dew_point2_f", "Outdoor Temperature Dew Point (Degrees F)"),
+    new_gauge("dewPoint2c", "outdoor_temperature_dew_point2", "Outdoor Temperature Dew Point (Degrees C)"),
 }
 
 def f_to_c(fahrenheit_temperature):
