@@ -17,7 +17,7 @@ from ambient_client import *
 @click.option('--config_file', type=str, default=None, help='YAML configuration file', required=True)
 def launch(verbose, config_file):
   config_logging(verbose)
-  logging.debug("Beginning auto configuration")
+  logging.info("Initializing Ambient Weather Client")
 
   config = Configuration(config_src=config_file, config_schema_path='config_schema.json')
   logging.debug("Configuration: " + str(config.get_config('ambient')))
@@ -38,7 +38,7 @@ def launch(verbose, config_file):
   while True:
     sleep(interval)
     try:
-      logging.debug("polling Ambient Weather")
+      logging.info("Polling Ambient Weather")
       cli.poll()
     except Exception as e:
       logging.error("Failed to pull data: %s", e)
