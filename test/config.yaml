@@ -1,0 +1,6 @@
+tag: ambient-weather-exporter-config
+poll_interval: 60
+listen_port: 9000
+ambient:
+  api_key: 815f9c20cb7246f8bfb697aec0f1fdabb90a42123ccc4e999aefe13cbf707da0
+  application_key: 7955ac8621644f069a814ecac364796408c4547e268c4134ab34e287cbe8f068

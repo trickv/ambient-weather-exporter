@@ -5,11 +5,12 @@ LABEL maintainer "trick@vanstaveren.us"
 WORKDIR /app
 EXPOSE 8000
 RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y python3-virtualenv
-RUN virtualenv --python=python3 /app             
-COPY requirements.pip requirements.pip
-RUN /app/bin/pip install -r requirements.pip
+    apt-get upgrade -y
+COPY requirements.txt requirements.txt
+RUN /usr/local/bin/pip install \
+  --root-user-action=ignore \
+  --disable-pip-version-check \
+  -r requirements.txt
 COPY test.py /app/test.py
 USER nobody
-ENTRYPOINT ["/app/bin/python", "/app/test.py"]
+ENTRYPOINT ["/usr/local/bin/python", "/app/test.py"]

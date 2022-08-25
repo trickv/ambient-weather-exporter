@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Ambient Weather Exporter Configuration",
+  "description": "Runtime values for the Ambient Weather Exporter Daemon",
+  "type": "object",
+  "properties": {
+    "tag": {
+      "type": "string"
+    },
+    "ambient": { "$ref": "#/$defs/ambient_config" },
+    "poll_interval": {
+      "type": "integer",
+      "description": "Number of seconds to wait between calls to to Ambient Weather.  Defaults to 300 seconds (5 minutes)."
+    },
+    "listen_port": {
+      "type": "integer",
+      "description": "TCP/IP port for exposing the Prometheus metrics. Defaults to 9000."
+    }
+  },
+  "$defs": {
+    "ambient_config": {
+      "type": "object",
+      "required": ["api_key"],
+      "properties": {
+        "api_key": {
+          "type": "string",
+          "description": "API key obtained fom Ambient Weather.  Specific to your user."
+        },
+        "application_key": {
+          "type": "string",
+          "description": "Application key obtained from Ambient Weather.  Specific to this application.  You can use a key you have created under your user if you wish.  Otherwise the default value will work fine."
+        },
+        "devices": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/device_definition" }
+        }
+      }
+    },
+    "device_definition": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "How you want the device to be labeled."
+        },
+        "sensors": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/sensor_definition"}
+        }
+      }
+    },
+    "sensor_definition": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "How you want the sensor to be labeled."
+        },
+        "id": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

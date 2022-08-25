@@ -1,0 +1,393 @@
+24hourrainin:
+  name: rain_in_24_h
+  description: 24 Hour Rain, in
+baromabsin:
+  name: barometric_pressure
+  description: Absolute Pressure, inHg
+baromrelin:
+  name: relative_barometric_pressure
+  description: Relative Pressure, inHg
+batleak1:
+  name: battery_leak_indicator_sensor_1
+  description: Leak Detector Battery - sensor 1 - 1=Low 0=OK
+batleak2:
+  name: battery_leak_indicator_sensor_2
+  description: Leak Detector Battery - sensor 2 - 1=Low 0=OK
+batleak3:
+  name: battery_leak_indicator_sensor_3
+  description: Leak Detector Battery - sensor 3 - 1=Low 0=OK
+batleak4:
+  name: battery_leak_indicator_sensor_4
+  description: Leak Detector Battery - sensor 4 - 1=Low 0=OK
+batt1:
+  name: battery_low_sensor_1
+  description: OK/Low indication - sensor 1, Int, 1=OK, 0=Low (Meteobridge Users 1=Low, 0=OK)
+batt2:
+  name: battery_low_sensor_2
+  description: OK/Low indication - sensor 2, Int, 1=OK, 0=Low (Meteobridge Users 1=Low, 0=OK)
+batt3:
+  name: battery_low_sensor_3
+  description: OK/Low indication - sensor 3, Int, 1=OK, 0=Low (Meteobridge Users 1=Low, 0=OK)
+batt4:
+  name: battery_low_sensor_4
+  description: OK/Low indication - sensor 4, Int, 1=OK, 0=Low (Meteobridge Users 1=Low, 0=OK)
+batt5:
+  name: battery_low_sensor_5
+  description: OK/Low indication - sensor 5, Int, 1=OK, 0=Low (Meteobridge Users 1=Low, 0=OK)
+batt6:
+  name: battery_low_sensor_6
+  description: OK/Low indication - sensor 6, Int, 1=OK, 0=Low (Meteobridge Users 1=Low, 0=OK)
+batt7:
+  name: battery_low_sensor_7
+  description: OK/Low indication - sensor 7, Int, 1=OK, 0=Low (Meteobridge Users 1=Low, 0=OK)
+batt8:
+  name: battery_low_sensor_8
+  description: OK/Low indication - sensor 8, Int, 1=OK, 0=Low (Meteobridge Users 1=Low, 0=OK)
+batt9:
+  name: battery_low_sensor_9
+  description: OK/Low indication - sensor 9, Int, 1=OK, 0=Low (Meteobridge Users 1=Low, 0=OK)
+batt10:
+  name: battery_low_sensor_10
+  description: OK/Low indication - sensor 10, Int, 1=OK, 0=Low (Meteobridge Users 1=Low, 0=OK)
+batt_25:
+  name: battery_low_air_quality_sensor
+  description: PM2.5 Air Quality Sensor Battery indication, OK/Low indication, Int, 1=OK, 0=Low (Meteobridge Users 1=Low, 0=OK)
+batt_cellgateway:
+  name: battery_low_cell_gatewya
+  description: Cellular Gateway - 1=OK, 0=Low
+batt_co2:
+  name: battery_low_co2
+  description: CO2 battery - 1=OK, 0=Low
+batt_lightning:
+  name: battery_low_lightning
+  description: Lightning Detector Battery - 1=Low 0=OK
+battin:
+  name: battery_low_indoor
+  description: Indoor Battery - OK/Low indication, Int, 1=OK, 0=Low (Meteobridge Users 1=Low, 0=OK)
+battout:
+  name: battery_low_outdoor
+  description: Outdoor Battery - OK/Low indication, Int, 1=OK, 0=Low (Meteobridge Users 1=Low, 0=OK)
+battsm1:
+  name: battery_low_soil1
+  description: Soil Moisture Battery - 1=OK, 0=Low
+co2:
+  name: co2_concentration
+  descriptioon: CO2 Meter, ppm
+dailyrainin:
+  name: daily_rainfall_in
+  description: Daily Rain in inches
+dateutc:
+  name: date_epoc
+  description: Datetime, int (milliseconds from 01-01-1970, rounded down to nearest minute on server)
+dewPoint:
+  name: dew_point
+  description: Dew Point, in degrees Fahrenheit (calculated on server)
+dewPoint1:
+  name: dew_point_sensor_1
+  description: Dew Point - sensor 1, in degrees Fahrenheit (calculated on server)
+dewPoint2:
+  name: dew_point_sensor_2
+  description: Dew Point - sensor 2, in degrees Fahrenheit (calculated on server)
+dewPoint3:
+  name: dew_point_sensor_3
+  description: Dew Point - sensor 3, in degrees Fahrenheit (calculated on server)
+dewPoint4:
+  name: dew_point_sensor_4
+  description: Dew Point - sensor 4, in degrees Fahrenheit (calculated on server)
+dewPoint5:
+  name: dew_point_sensor_5
+  description: Dew Point - sensor 5, in degrees Fahrenheit (calculated on server)
+dewPoint6:
+  name: dew_point_sensor_6
+  description: Dew Point - sensor 6, in degrees Fahrenheit (calculated on server)
+dewPoint7:
+  name: dew_point_sensor_7
+  description: Dew Point - sensor 7, in degrees Fahrenheit (calculated on server)
+dewPoint8:
+  name: dew_point_sensor_8
+  description: Dew Point - sensor 8, in degrees Fahrenheit (calculated on server)
+dewPoint9:
+  name: dew_point_sensor_9
+  description: Dew Point - sensor 9, in degrees Fahrenheit (calculated on server)
+dewPoint10:
+  name: dew_point_sensor_10
+  description: Dew Point - sensor 10, in degrees Fahrenheit (calculated on server)
+dewPointin:
+  name: dew_point_indoor
+  description: Dew Point - indoor, in degrees Fahrenheit (calculated on server)Indoor dew Point
+eventrainin:
+  name: rain_this_event_in
+  description: Event Rain in inches
+feelsLike:
+  name: feels_like
+  description: if < 50in degrees Fahrenheit => Wind Chill, if > 68in degrees Fahrenheit => Heat Index (calculated on server)
+feelsLike1:
+  name: feels_like_sensor_1
+  description: sensor 1 -  if < 50in degrees Fahrenheit => Wind Chill, if > 68in degrees Fahrenheit => Heat Index (calculated on server)
+feelsLike2:
+  name: feels_like_sensor_2
+  description: sensor 2 -  if < 50in degrees Fahrenheit => Wind Chill, if > 68in degrees Fahrenheit => Heat Index (calculated on server)
+feelsLike3:
+  name: feels_like_sensor_3
+  description: sensor 3 -  if < 50in degrees Fahrenheit => Wind Chill, if > 68in degrees Fahrenheit => Heat Index (calculated on server)
+feelsLike4:
+  name: feels_like_sensor_4
+  description: sensor 4 -  if < 50in degrees Fahrenheit => Wind Chill, if > 68in degrees Fahrenheit => Heat Index (calculated on server)
+feelsLike5:
+  name: feels_like_sensor_5
+  description: sensor 5 -  if < 50in degrees Fahrenheit => Wind Chill, if > 68in degrees Fahrenheit => Heat Index (calculated on server)
+feelsLike6:
+  name: feels_like_sensor_6
+  description: sensor 6 -  if < 50in degrees Fahrenheit => Wind Chill, if > 68in degrees Fahrenheit => Heat Index (calculated on server)
+feelsLike7:
+  name: feels_like_sensor_7
+  description: sensor 7 -  if < 50in degrees Fahrenheit => Wind Chill, if > 68in degrees Fahrenheit => Heat Index (calculated on server)
+feelsLike8:
+  name: feels_like_sensor_8
+  description: sensor 8 -  if < 50in degrees Fahrenheit => Wind Chill, if > 68in degrees Fahrenheit => Heat Index (calculated on server)
+feelsLike9:
+  name: feels_like_sensor_9
+  description: sensor 9 -  if < 50in degrees Fahrenheit => Wind Chill, if > 68in degrees Fahrenheit => Heat Index (calculated on server)
+feelsLike10:
+  name: feels_like_sensor_10
+  description: sensor 10 -  if < 50in degrees Fahrenheit => Wind Chill, if > 68in degrees Fahrenheit => Heat Index (calculated on server)
+feelsLikein:
+  name: feels_like_indoor
+  description: indoor -  if < 50in degrees Fahrenheit => Wind Chill, if > 68in degrees Fahrenheit => Heat Index (calculated on server)
+hourlyrainin:
+  name: rain_this_hour
+  description: Hourly Rain Rate, in/hr
+humidity:
+  name: humidity
+  description: humidity, 0-100%
+humidity1:
+  name: humidity_sensor_1
+  description: Humidity - sensor 1, 0-100%
+humidity2:
+  name: humidity_sensor_2
+  description: Humidity - sensor 2, 0-100%
+humidity3:
+  name: humidity_sensor_3
+  description: Humidity - sensor 3, 0-100%
+humidity4:
+  name: humidity_sensor_4
+  description: Humidity - sensor 4, 0-100%
+humidity5:
+  name: humidity_sensor_5
+  description: Humidity - sensor 5, 0-100%
+humidity6:
+  name: humidity_sensor_6
+  description: Humidity - sensor 6, 0-100%
+humidity7:
+  name: humidity_sensor_7
+  description: Humidity - sensor 7, 0-100%
+humidity8:
+  name: humidity_sensor_8
+  description: Humidity - sensor 8, 0-100%
+humidity9:
+  name: humidity_sensor_9
+  description: Humidity - sensor 9, 0-100%
+humidity10:
+  name: humidity_sensor_10
+  description: Humidity - sensor 10, 0-100%
+humidityin:
+  name: humidity_indoor
+  description: Indoor Humidity, 0-100%
+lastRain:
+  name: last_rain_time
+  description: Last time hourlyrainin > 0, date (calculated on server)
+lightning_day:
+  name: lightning_strikes_today
+  description: Lightning strikes per day, int
+lightning_distance:
+  name: lightning_strike_distance_mi
+  description: Distance of last lightning strike, Float, miles
+lightning_hour:
+  name: lightning_strikes_this_hour
+  description: Lightning strikes per hour, int
+lightning_time:
+  name: lightning_last_time
+  description: Last strike time, Datetime
+maxdailygust:
+  name: gusts_daily_max
+  description: Maximum wind speed in last day, mph
+monthlyrainin:
+  name: rain_this_month
+  description: Monthly Rain, in
+pm25:
+  name: air_quality_pm25
+  description: PM2.5 Air Quality, Float, micro-g/m^3
+pm25_24h:
+  name: air_quality_pm25_today
+  description: PM2.5 Air Quality 24 hour average, Float, micro-g/m^3
+pm25_in:
+  name: air_quality_pm25_indoors
+  description: PM2.5 Air Quality, Indoor, Float, micro-g/m^3
+pm25_in_24h:
+  name: air_quality_pm25_indoors_today
+  description: PM2.5 Air Quality 24 hour average, Indoor, Float, micro-g/m^3
+relay1:
+  name: relay_sensor_1
+  description: Relay - sensor 1, 0 or 1
+relay2:
+  name: relay_sensor_2
+  description: Relay - sensor 2, 0 or 1
+relay3:
+  name: relay_sensor_3
+  description: Relay - sensor 3, 0 or 1
+relay4:
+  name: relay_sensor_4
+  description: Relay - sensor 4, 0 or 1
+relay5:
+  name: relay_sensor_5
+  description: Relay - sensor 5, 0 or 1
+relay6:
+  name: relay_sensor_6
+  description: Relay - sensor 6, 0 or 1
+relay7:
+  name: relay_sensor_7
+  description: Relay - sensor 7, 0 or 1
+relay8:
+  name: relay_sensor_8
+  description: Relay - sensor 8, 0 or 1
+relay9:
+  name: relay_sensor_9
+  description: Relay - sensor 9, 0 or 1
+relay10:
+  name: relay_sensor_10
+  description: Relay - sensor 10, 0 or 1
+soilhum1:
+  name: soil_humidity_sensor_1
+  description: Soil humidity - sensor 1, 0-100%
+soilhum2:
+  name: soil_humidity_sensor_2
+  description: Soil humidity - sensor 2, 0-100%
+soilhum3:
+  name: soil_humidity_sensor_3
+  description: Soil humidity - sensor 3, 0-100%
+soilhum4:
+  name: soil_humidity_sensor_4
+  description: Soil humidity - sensor 4, 0-100%
+soilhum5:
+  name: soil_humidity_sensor_5
+  description: Soil humidity - sensor 5, 0-100%
+soilhum6:
+  name: soil_humidity_sensor_6
+  description: Soil humidity - sensor 6, 0-100%
+soilhum7:
+  name: soil_humidity_sensor_7
+  description: Soil humidity - sensor 7, 0-100%
+soilhum8:
+  name: soil_humidity_sensor_8
+  description: Soil humidity - sensor 8, 0-100%
+soilhum9:
+  name: soil_humidity_sensor_9
+  description: Soil humidity - sensor 9, 0-100%
+soilhum10:
+  name: soil_humidity_sensor_10
+  description: Soil humidity - sensor 10, 0-100%
+soiltemp1f:
+  name: soil_temperature_sensor_1
+  description: Soil temperature - sensor 1, in degrees Fahrenheit
+soiltemp2f:
+  name: soil_temperature_sensor_2
+  description: Soil temperature - sensor 2, in degrees Fahrenheit
+soiltemp3f:
+  name: soil_temperature_sensor_3
+  description: Soil temperature - sensor 3, in degrees Fahrenheit
+soiltemp4f:
+  name: soil_temperature_sensor_4
+  description: Soil temperature - sensor 4, in degrees Fahrenheit
+soiltemp5f:
+  name: soil_temperature_sensor_5
+  description: Soil temperature - sensor 5, in degrees Fahrenheit
+soiltemp6f:
+  name: soil_temperature_sensor_6
+  description: Soil temperature - sensor 6, in degrees Fahrenheit
+soiltemp7f:
+  name: soil_temperature_sensor_7
+  description: Soil temperature - sensor 7, in degrees Fahrenheit
+soiltemp8f:
+  name: soil_temperature_sensor_8
+  description: Soil temperature - sensor 8, in degrees Fahrenheit
+soiltemp9f:
+  name: soil_temperature_sensor_9
+  description: Soil temperature - sensor 9, in degrees Fahrenheit
+soiltemp10f:
+  name: soil_temperature_sensor_10
+  description: Soil temperature - sensor 10, in degrees Fahrenheit
+solarradiation:
+  name: radiation_solar
+  description: Solar Radiation, W/m^2
+temp1f:
+  name: temperature_sensor_1
+  description: Temperature - sensor 1, in degrees Fahrenheit
+temp2f:
+  name: temperature_sensor_2
+  description: Temperature - sensor 2, in degrees Fahrenheit
+temp3f:
+  name: temperature_sensor_3
+  description: Temperature - sensor 3, in degrees Fahrenheit
+temp4f:
+  name: temperature_sensor_4
+  description: Temperature - sensor 4, in degrees Fahrenheit
+temp5f:
+  name: temperature_sensor_5
+  description: Temperature - sensor 5, in degrees Fahrenheit
+temp6f:
+  name: temperature_sensor_6
+  description: Temperature - sensor 6, in degrees Fahrenheit
+temp7f:
+  name: temperature_sensor_7
+  description: Temperature - sensor 7, in degrees Fahrenheit
+temp8f:
+  name: temperature_sensor_8
+  description: Temperature - sensor 8, in degrees Fahrenheit
+temp9f:
+  name: temperature_sensor_9
+  description: Temperature - sensor 9, in degrees Fahrenheit
+temp10f:
+  name: temperature_sensor_10
+  description: Temperature - sensor 10, in degrees Fahrenheit
+tempf:
+  name: temperature
+  description: Outdoor Temperature, in degrees Fahrenheit
+tempinf:
+  name: temperature_indoor
+  description: Indoor Temperature, in degrees Fahrenheit
+totalrainin:
+  name: rain_total
+  description: Total Rain, in (since last factory reset)
+uv:
+  name: radiation_uv
+  description: Ultra-Violet Radiation Index, integer on all devices EXCEPT WS-8478.
+weeklyrainin:
+  name: rail_weekly
+  description: Weekly Rain, in
+winddir:
+  description: instantaneous wind direction, 0-360deg
+  name: wind_direction
+winddir_avg10m:
+  name: wind_direction_10min
+  description: Average wind direction, 10 minute average, 0-360deg
+winddir_avg2m:
+  name: wind_direction_2min
+  description: Average wind direction, 2 minute average, mph
+windgustdir:
+  name: wind_gust_direction
+  description: Wind direction at which the wind gust occurred, 0-360deg
+windgustmph:
+  description: max wind speed in the last 10 minutes, mph
+  name: wind_gust_mph
+windspdmph_avg10m:
+  description: Average wind speed, 10 minute average, mph
+  name: wind_speed_10min
+windspdmph_avg2m:
+  description: Average wind speed, 2 minute average, mph
+  name: wind_speed_2min
+windspeedmph:
+  description: instantaneous wind speed, mph
+  name: wind_speed_mph
+yearlyrainin:
+  description: Yearly Rain, in
+  name: rain_this_year
