@@ -1,12 +1,19 @@
-AMBIENT_API_KEY?=815f9c20cb7246f8bfb697aec0f1fdabb90a42123ccc4e999aefe13cbf707da0
-AMBIENT_APPLICATION_KEY?=67a05cffa31946ad9f15ffbc0cbecdcf2e933d488eaa49ef84c8d40f566a0bcb
+IMG_TAG=reedswenson/ambient-weather-exporter:latest
+cur_dir:=$(shell pwd)
 
-build:
-	docker build . -t reedswenson/ambient-weather-exporter:latest
+build: clean
+	mkdir .build
+	cp src/*.py src/*.yaml src/*.json src/*.txt .build
+	cd .build && docker build . -f ../Dockerfile -t $(IMG_TAG)
+
+clean:
+	rm -rf .build
+
+push:
+	docker push $(IMG_TAG)
 
 run_container:
-	docker run --rm \
-	-e AMBIENT_API_KEY=$(AMBIENT_API_KEY) \
-	-e AMBIENT_APPLICATION_KEY=$(AMBIENT_APPLICATION_KEY) \
-	-p 8000:8000 \
-	reedswenson/ambient-weather-exporter:latest
+	docker run --rm -it \
+	-p 9000:9000 \
+	-v $(cur_dir)/test:/app/config \
+	$(IMG_TAG)

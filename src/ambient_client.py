@@ -1,4 +1,5 @@
 import logging
+import os
 import yaml
 
 from ambient_api.ambientapi import AmbientAPI
@@ -12,7 +13,8 @@ class StaleDataException(Exception):
 
 class AmbientClient:
   def __init__(self, config: dict):
-    field_config = 'fields.yaml'
+    dirname = os.path.dirname(__file__)
+    field_config = os.path.join(dirname, 'fields.yaml')
 
     if 'field_mapping' in config and config['field_mapping'] is not None:
       field_config = config['field_mapping']

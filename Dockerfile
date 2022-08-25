@@ -11,6 +11,6 @@ RUN /usr/local/bin/pip install \
   --root-user-action=ignore \
   --disable-pip-version-check \
   -r requirements.txt
-COPY test.py /app/test.py
+COPY * /app/
 USER nobody
-ENTRYPOINT ["/usr/local/bin/python", "/app/test.py"]
+ENTRYPOINT ["/app/main.py", "--verbose=yes", "--config_file=config/config.yaml"]

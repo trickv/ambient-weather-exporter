@@ -3,6 +3,7 @@
 from concurrent.futures import ThreadPoolExecutor
 import logging
 import sys
+from sys import argv
 from time import sleep
 
 import click
@@ -53,4 +54,5 @@ def config_logging(verbose: bool):
     )
 
 if __name__ == '__main__':
+  print(str(argv))
   poll_time, api_key, app_key = launch()
