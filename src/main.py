@@ -36,11 +36,13 @@ def launch(verbose, config_file):
   interval = int(config.get_config('poll_interval'))
   logging.info('Starting to poll Ambient Weather every %i seconds', interval)
   while True:
+    sleep(interval)
     try:
+      logging.debug("polling Ambient Weather")
       cli.poll()
     except Exception as e:
       logging.error("Failed to pull data: %s", e)
-    sleep(interval)
+
 
 def config_logging(verbose: bool):
   log_level = logging.DEBUG if verbose else logging.INFO

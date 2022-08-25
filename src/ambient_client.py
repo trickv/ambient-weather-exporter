@@ -29,27 +29,34 @@ class AmbientClient:
 
   def initialize_gauges(self):
     logging.debug('initializing_guages')
-    devices = self.client.get_devices()
-    if len(devices) == 0:
+    self.gauges = {}
+    dat = self.pull_data()
+    if dat is None:
       raise ClientInitializationException("No devices detected.  Cannot initialize.")
 
-    self.gauges = {}
-    for d in devices:
-      logging.debug('device: %s', str(d))
-      logging.debug('data: %s', str(d.last_data))
-      for k in d.last_data.keys():
-        if k in self.field_mapping.keys():
-          self.gauges[k] = Gauge(self.field_mapping[k]['name'], self.field_mapping[k]['description'])
+    logging.debug('data: %s', str(dat))
+    for k in dat.keys():
+      if k in self.field_mapping.keys():
+        self.gauges[k] = Gauge(self.field_mapping[k]['name'], self.field_mapping[k]['description'])
 
     logging.debug('gauges: %s', self.gauges)
+    self.populate_gauges(dat)
 
-  def poll(self):
+
+  def pull_data(self) -> dict:
+    logging.debug('pulling data')
     resp = self.client.get_devices()
     if len(resp) == 0:
       logging.warn("No data returned.")
-      return
-    device_data = resp[0].last_data # FIXME: Handle multiple devices
+      return None
+    return resp[0].last_data # FIXME: Handle multiple devices
+
+  def populate_gauges(self, device_data: dict):
     for k in device_data.keys():
       if k in self.gauges.keys():
         logging.debug('using %s to set %s to %s', k, self.gauges[k], device_data[k])
         self.gauges[k].set(device_data[k])
+
+  def poll(self):
+    dat = self.pull_data()
+    self.populate_gauges(dat)
