@@ -1,5 +1,7 @@
 def containerRepo = 'docker.io/reedswenson/ambient-weather-exporter'
 def gitBranch = env.BRANCH_NAME.replaceAll('/','_')
+def commitHash = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
+def imgBaseDest = "${containerRepo}:${gitBranch}-${commitHash}"
 
 pipeline {
   agent none
@@ -14,12 +16,11 @@ pipeline {
           }
           steps {
             script {
-                      COMMIT_HASH = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
-                      IMAGE_TAG = "amd64-${gitBranch}-${COMMIT_HASH}"
-                      echo "Image Destination ${containerRepo}:${IMAGE_TAG}"
+                      IMG_DEST = "${imgBaseDest}-amd64"
+                      echo "Image Destination ${IMG_DEST}"
                   }
             container('kaniko') {
-              withEnv(['PATH+EXTRA=/busybox',"IMAGE_TAG=${IMAGE_TAG}", "CACHE=false", "GIT_BRANCH=${gitBranch}", "CONTAINER_REPO=${containerRepo}"]) {
+              withEnv(['PATH+EXTRA=/busybox',"IMG_DEST=${IMG_DEST}", "CACHE=false"]) {
                         sh '''#!/busybox/sh
                         PATH=/usr/local/bin:/kaniko:/busybox /kaniko/executor \
                         -f `pwd`/Dockerfile \
@@ -27,7 +28,7 @@ pipeline {
                         --snapshot-mode=redo \
                         --use-new-run  \
                         --cache=$CACHE \
-                        --destination=$CONTAINER_REPO:$IMAGE_TAG
+                        --destination=$IMG_DEST
                         '''
                         }
             }
@@ -41,12 +42,11 @@ pipeline {
           }
           steps {
             script {
-                      COMMIT_HASH = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
-                      IMAGE_TAG = "arm64-${gitBranch}-${COMMIT_HASH}"
-                      echo "Image Destination ${containerRepo}:${IMAGE_TAG}"
+                      IMG_DEST = "${imgBaseDest}-amd64"
+                      echo "Image Destination ${IMG_DEST}"
                   }
             container('kaniko') {
-              withEnv(['PATH+EXTRA=/busybox',"IMAGE_TAG=${IMAGE_TAG}", "CACHE=false", "GIT_BRANCH=${gitBranch}", "CONTAINER_REPO=${containerRepo}"]) {
+              withEnv(['PATH+EXTRA=/busybox',"IMG_DEST=${IMG_DEST}", "CACHE=false"]) {
                         sh '''#!/busybox/sh
                         PATH=/usr/local/bin:/kaniko:/busybox /kaniko/executor \
                         -f `pwd`/Dockerfile \
@@ -54,13 +54,16 @@ pipeline {
                         --snapshot-mode=redo \
                         --use-new-run  \
                         --cache=$CACHE \
-                        --destination=$CONTAINER_REPO:$IMAGE_TAG
+                        --destination=$IMG_DEST
                         '''
                         }
             }
           }
         }
       }
+    }
+    stage("Manifest Creation") {
+      echo "Create Manifest"
     }
   }
 }
