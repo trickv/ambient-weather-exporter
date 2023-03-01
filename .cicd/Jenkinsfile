@@ -22,7 +22,8 @@ pipeline {
                     PATH=/usr/local/bin:/kaniko:/busybox /kaniko/executor -f `pwd`/Dockerfile -c `pwd` \
                     --snapshotMode=redo \
                     --use-new-run  --cache=$CACHE \
-                    --destination=$REPO:$IMAGE_TAG
+                    --destination=$REPO:$IMAGE_TAG \
+                    -v=debug
                     '''
                     }
         }
