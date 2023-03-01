@@ -14,7 +14,7 @@ pipeline {
         script {
                   COMMIT_HASH = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
                   IMAGE_TAG = "${gitBranch}-${COMMIT_HASH}"
-                  echo "Tagging Image with ${IMAGE_TAG}"
+                  echo "Image Destination ${containerRepo}:${IMAGE_TAG}"
               }
         container('kaniko') {
           withEnv(['PATH+EXTRA=/busybox',"IMAGE_TAG=${IMAGE_TAG}", "CACHE=false", "GIT_BRANCH=${gitBranch}", "CONTAINER_REPO=${containerRepo}"]) {
@@ -25,7 +25,7 @@ pipeline {
                     --snapshot-mode=redo \
                     --use-new-run  \
                     --cache=$CACHE \
-                    --destination=$REPO:$IMAGE_TAG \
+                    --destination=$CONTAINER_REPO:$IMAGE_TAG \
                     -v=debug
                     '''
                     }
