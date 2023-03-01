@@ -1,6 +1,6 @@
 kind: Pod
 spec:
-  serviceAccountName: kaniko
+  serviceAccountName: jenkins
   nodeSelector:
     kubernetes.io/arch: amd64
     kubernetes.io/os: linux
