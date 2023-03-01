@@ -6,7 +6,7 @@ spec:
     kubernetes.io/os: linux
   containers:
     - name: kaniko
-      image: gcr.io/kaniko-project/executor:latest
+      image: gcr.io/kaniko-project/executor:debug
       resources:
         requests:
           cpu: 1500m
