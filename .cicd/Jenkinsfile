@@ -17,7 +17,7 @@ pipeline {
                   echo "Tagging Image with ${IMAGE_TAG}"
               }
         container('kaniko'){
-          withEnv(['PATH+EXTRA=/busybox',"IMAGE_TAG=${IMAGE_TAG}", "CACHE=false", "GIT_BRANCH=${gitBranch}", "CONTAINER_REPO=${continerRepo}"]) {
+          withEnv(['PATH+EXTRA=/busybox',"IMAGE_TAG=${IMAGE_TAG}", "CACHE=false", "GIT_BRANCH=${gitBranch}", "CONTAINER_REPO=${containerRepo}"]) {
                     sh '''#!/busybox/sh
                     PATH=/usr/local/bin:/kaniko:/busybox /kaniko/executor -f `pwd`/Dockerfile -c `pwd` \
                     --snapshotMode=redo \
