@@ -1,11 +1,20 @@
 def containerRepo = 'docker.io/reedswenson/ambient-weather-exporter'
 def gitBranch = env.BRANCH_NAME.replaceAll('/','_')
-def commitHash = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
-def imgBaseDest = "${containerRepo}:${gitBranch}-${commitHash}"
+def commitHash = 'not_set'
+def imgBaseDest = 'not_set'
 
 pipeline {
   agent none
   stages {
+    stage("Gather Info"){
+      agent any
+      steps {
+        commitHash = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
+        imgBaseDest = "${containerRepo}:${gitBranch}-${commitHash}"
+
+        echo "commitHash = ${commitHash} ----> imgBaseDest = ${imgBaseDest}"
+      }
+    }
     stage("Image Builds") {
       parallel {
         stage('AMD64 Build') {
