@@ -25,8 +25,7 @@ pipeline {
                     --snapshot-mode=redo \
                     --use-new-run  \
                     --cache=$CACHE \
-                    --destination=$CONTAINER_REPO:$IMAGE_TAG \
-                    -v=debug
+                    --destination=$CONTAINER_REPO:$IMAGE_TAG
                     '''
                     }
         }
