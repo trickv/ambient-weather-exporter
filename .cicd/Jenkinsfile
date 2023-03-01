@@ -9,10 +9,11 @@ pipeline {
     stage("Gather Info"){
       agent any
       steps {
-        commitHash = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
-        imgBaseDest = "${containerRepo}:${gitBranch}-${commitHash}"
-
-        echo "commitHash = ${commitHash} ----> imgBaseDest = ${imgBaseDest}"
+        script {
+          commitHash = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
+          imgBaseDest = "${containerRepo}:${gitBranch}-${commitHash}"
+          echo "commitHash = ${commitHash} ----> imgBaseDest = ${imgBaseDest}"
+        }
       }
     }
     stage("Image Builds") {
