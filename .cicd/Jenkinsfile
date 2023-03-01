@@ -1,9 +1,31 @@
+def containerRepo = 'reedswenson/ambient-weather-exporter'
+def gitBranch = env.BRANCH_NAME.replaceAll('/','_')
+
 pipeline {
-  agent any
+  agent none
   stages {
-    stage('Hello') {
+    stage('AMD64 Build') {
+      agent {
+        kubernetes {
+          yamlFile '.cicd/kaniko-amd64.yaml'
+        }
+      }
       steps {
-        echo 'Hello World'
+        script {
+                  COMMIT_HASH = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
+                  IMAGE_TAG = "${gitBranch}-${COMMIT_HASH}"
+                  echo "Tagging Image with ${IMAGE_TAG}"
+              }
+        container('kaniko'){
+          withEnv(['PATH+EXTRA=/busybox',"IMAGE_TAG=${IMAGE_TAG}", "CACHE=false", "GIT_BRANCH=${gitBranch}", "CONTAINER_REPO=${continerRepo}"]) {
+                    sh '''#!/busybox/sh
+                    PATH=/usr/local/bin:/kaniko:/busybox /kaniko/executor -f `pwd`/Dockerfile -c `pwd` \
+                    --snapshotMode=redo \
+                    --use-new-run  --cache=$CACHE \
+                    --destination=$REPO:$IMAGE_TAG
+                    '''
+                    }
+        }
       }
     }
   }

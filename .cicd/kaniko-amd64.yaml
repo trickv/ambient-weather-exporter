@@ -1,0 +1,32 @@
+kind: Pod
+spec:
+  serviceAccountName: kaniko
+  nodeSelector:
+    kubernetes.io/arch: amd64
+    kubernetes.io/os: linux
+  containers:
+    - name: kaniko
+      image: gcr.io/kaniko-project/executor:v1.7.0-debug
+      resources:
+        requests:
+          cpu: 1500m
+          memory: 1Gi
+        limits:
+          cpu: 4000m
+          memory: 4Gi
+      imagePullPolicy: IfNotPresent
+      command:
+        - /busybox/cat
+      tty: true
+      volumeMounts:
+        - name: jenkins-docker-cfg
+          mountPath: /kaniko/.docker
+  volumes:
+    - name: jenkins-docker-cfg
+      projected:
+        sources:
+          - secret:
+              name: dockerhub-creds
+              items:
+                - key: dockerhub-creds
+                  path: config.json
