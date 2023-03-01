@@ -25,12 +25,8 @@ pipeline {
             }
           }
           steps {
-            script {
-                      IMG_DEST = "${imgBaseDest}-amd64"
-                      echo "Image Destination ${IMG_DEST}"
-                  }
             container('kaniko') {
-              withEnv(['PATH+EXTRA=/busybox',"IMG_DEST=${IMG_DEST}", "CACHE=false"]) {
+              withEnv(['PATH+EXTRA=/busybox',"IMG_DEST=${imgBaseDest}", "CACHE=false"]) {
                         sh '''#!/busybox/sh
                         PATH=/usr/local/bin:/kaniko:/busybox /kaniko/executor \
                         -f `pwd`/Dockerfile \
@@ -51,12 +47,8 @@ pipeline {
             }
           }
           steps {
-            script {
-                      IMG_DEST = "${imgBaseDest}-amd64"
-                      echo "Image Destination ${IMG_DEST}"
-                  }
             container('kaniko') {
-              withEnv(['PATH+EXTRA=/busybox',"IMG_DEST=${IMG_DEST}", "CACHE=false"]) {
+              withEnv(['PATH+EXTRA=/busybox',"IMG_DEST=${imgBaseDest}", "CACHE=false"]) {
                         sh '''#!/busybox/sh
                         PATH=/usr/local/bin:/kaniko:/busybox /kaniko/executor \
                         -f `pwd`/Dockerfile \
