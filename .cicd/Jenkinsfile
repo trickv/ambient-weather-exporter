@@ -16,12 +16,16 @@ pipeline {
                   IMAGE_TAG = "${gitBranch}-${COMMIT_HASH}"
                   echo "Tagging Image with ${IMAGE_TAG}"
               }
-        container('kaniko'){
+        container('kaniko') {
           withEnv(['PATH+EXTRA=/busybox',"IMAGE_TAG=${IMAGE_TAG}", "CACHE=false", "GIT_BRANCH=${gitBranch}", "CONTAINER_REPO=${containerRepo}"]) {
                     sh '''#!/busybox/sh
-                    PATH=/usr/local/bin:/kaniko:/busybox /kaniko/executor -f `pwd`/Dockerfile -c `pwd` \
-                    --snapshotMode=redo \
-                    --use-new-run  --cache=$CACHE \
+                    cat /kaniko/.docker
+                    PATH=/usr/local/bin:/kaniko:/busybox /kaniko/executor \
+                    -f `pwd`/Dockerfile \
+                    -c `pwd` \
+                    --snapshot-mode=redo \
+                    --use-new-run  \
+                    --cache=$CACHE \
                     --destination=$REPO:$IMAGE_TAG \
                     -v=debug
                     '''
