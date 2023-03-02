@@ -76,7 +76,7 @@ pipeline {
     stage("Create Container Manifest") {
       agent {
         kubernetes {
-          yamlFile '.cicd/mainifest-builder.yaml'
+          yamlFile '.cicd/manifest-builder.yaml'
         }
       }
       steps {
