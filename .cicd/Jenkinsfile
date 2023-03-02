@@ -16,7 +16,7 @@ pipeline {
         }
       }
     }
-    stage("Image Builds") {
+    stage("Build Images") {
       parallel {
         stage('AMD64 Build') {
           agent {
@@ -52,7 +52,7 @@ pipeline {
           }
           steps {
             script {
-                      IMG_DEST = "${imgBaseDest}-arm"
+                      IMG_DEST = "${imgBaseDest}-arm64"
                       echo "Image Destination ${IMG_DEST}"
                   }
             container('kaniko') {
@@ -72,10 +72,24 @@ pipeline {
         }
       }
     }
-    stage("Manifest Creation") {
-      agent none
+    //  manifest-tool --docker-cfg=dockerhub-creds push from-args --platforms=linux/amd64,linux/arm64 --template=reedswenson/ambient-weather-exporter:multi-arch-build-3621c3d-ARCHVARIANT --target=reedswenson/ambient-weather-exporter:multi-arch-build-3621c3d
+    stage("Create Container Manifest") {
+      agent {
+        kubernetes {
+          yamlFile '.cicd/mainifest-builder.yaml'
+        }
+      }
       steps {
-        echo "Create Manifest"
+        container('manifest-tool') {
+          withEnv(["IMG_DEST=${imgBaseDest}"]){
+            sh '''
+              manifest-tool --docker-cfg=/docker-config.json push from-args \
+              --platforms=linux/amd64,linux/arm64 \
+              --template=$IMG_DEST-ARCH \
+              --target=$IMG_DEST
+            '''
+          }
+        }
       }
     }
   }

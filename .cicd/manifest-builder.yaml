@@ -1,0 +1,31 @@
+kind: Pod
+spec:
+  serviceAccountName: jenkins
+  containers:
+    - name: mainifest-tool
+      image: mplatform/manifest-tool
+      resources:
+        requests:
+          cpu: 1500m
+          memory: 1Gi
+        limits:
+          cpu: 4000m
+          memory: 4Gi
+      imagePullPolicy: IfNotPresent
+      command:
+        - /bin/bash
+      tty: true
+      volumeMounts:
+        - name: jenkins-docker-cfg
+          mountPath: /
+      securityContext:
+        privileged: true
+  volumes:
+    - name: jenkins-docker-cfg
+      projected:
+        sources:
+          - secret:
+              name: dockerhub-creds
+              items:
+                - key: dockerhub-creds
+                  path: docker-config.json
