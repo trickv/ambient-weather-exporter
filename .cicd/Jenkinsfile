@@ -52,7 +52,7 @@ pipeline {
           }
           steps {
             script {
-                      IMG_DEST = "${imgBaseDest}-amd64"
+                      IMG_DEST = "${imgBaseDest}-armv8"
                       echo "Image Destination ${IMG_DEST}"
                   }
             container('kaniko') {
